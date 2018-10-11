@@ -10,6 +10,10 @@ namespace PartyAffiliationClassifier
     {
         static void Main(string[] args)
         {
+            string filePath = @"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\Conservative27thMay2015.txt";
+            FileManager.FileReader(filePath);
+            Console.ReadLine();
+
         }
     }
 }
