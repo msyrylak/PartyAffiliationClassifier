@@ -34,6 +34,27 @@ namespace PartyAffiliationClassifier
                         }
                     }
                 }
+                int res = queensSpeech.Distinct().Count();
+                Console.WriteLine("All of the words: {0}", queensSpeech.Count());
+                Console.WriteLine("Unique words: {0}", res);
+
+                string finalString = String.Join(" ", queensSpeech.ToArray());
+                Dictionary<string, int> wordCounts = new Dictionary<string, int>();
+
+                foreach (var word in queensSpeech.Distinct())
+                {
+                    string dupSearch = word;
+                    int count = new Regex(dupSearch, RegexOptions.IgnoreCase).Matches(finalString).Count;
+
+                    wordCounts.Add(word, count);
+
+                }
+
+                foreach (KeyValuePair<string, int> kvp in wordCounts)
+                {
+                    Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                }
+
             }
             catch (Exception ex)
             {
