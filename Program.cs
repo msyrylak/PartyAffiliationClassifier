@@ -10,10 +10,31 @@ namespace PartyAffiliationClassifier
     {
         static void Main(string[] args)
         {
-            string filePath = @"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\Conservative27thMay2015.txt";
-            FileManager.FileReader(filePath);
-            Console.ReadLine();
+            Console.WriteLine("Welcome to the Party Affiliation Classifier!");
 
+            Console.WriteLine("File number 1: ");
+            string filePath1 = Console.ReadLine();
+
+            Console.WriteLine("File number 2: ");
+            string filePath2 = Console.ReadLine();
+
+            Console.WriteLine("File number 3: ");
+            string filePath3 = Console.ReadLine();
+
+            Console.WriteLine("File number 4: ");
+            string filePath4 = Console.ReadLine();
+
+            Console.WriteLine("File number 5: ");
+            string filePath5 = Console.ReadLine();
+
+            FileManager.FileReader(@"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\" + filePath1);
+            FileManager.FileReader(@"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\" + filePath2);
+            FileManager.FileReader(@"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\" + filePath3);
+            FileManager.FileReader(@"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\" + filePath4);
+            FileManager.FileReader(@"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\" + filePath5);
+
+
+            Console.ReadLine();
         }
     }
 }
