@@ -11,7 +11,7 @@ namespace PartyAffiliationClassifier
 {
     class FileManager
     {
-        public static void FileReader(string filePath)
+        public static Dictionary<string, int> FileReader(string filePath)
         {
             char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\r', '\n' };
 
@@ -35,45 +35,46 @@ namespace PartyAffiliationClassifier
                     }
                 }
 
-                int uniqueWords = queensSpeech.Distinct().Count();
-                Console.WriteLine("All of the words: {0}", queensSpeech.Count());
-                Console.WriteLine("Unique words: {0}", uniqueWords);
+                //Console.WriteLine("All of the words: {0}", queensSpeech.Count());
+                //Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
 
                 string speechString = string.Join(" ", queensSpeech.ToArray());
                 Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
 
-                foreach (var word in queensSpeech.Distinct())
+                foreach (var word in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase))
                 {
-                    string dupSearch = word;
-                    int count = new Regex(dupSearch, RegexOptions.IgnoreCase).Matches(speechString).Count;
+                        string dupSearch = word;
+                        int count = new Regex(dupSearch, RegexOptions.IgnoreCase).Matches(speechString).Count;
 
-                    wordFrequency.Add(word, count);
+                        wordFrequency.Add(word.ToLower(), count);
                 }
 
-                foreach (KeyValuePair<string, int> wordCount in wordFrequency)
-                {
-                    Console.WriteLine("Word = {0}, Count = {1}", wordCount.Key, wordCount.Value);
-                }
+                //foreach (KeyValuePair<string, int> wordCount in wordFrequency.OrderBy(i => i.Value))
+                //{
+                //    Console.WriteLine("Word = {0}, Count = {1}", wordCount.Key, wordCount.Value);
+                //}
 
                 // write stats to file
-                string path = @"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\BayesNetwork.txt";
+                string path = @"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\Vocabulary.txt";
 
                 StreamWriter sw = File.AppendText(path);
 
-                sw.WriteLine("File name: {0}", filePath);
-                sw.WriteLine("All of the words: {0}", queensSpeech.Count());
-                sw.WriteLine("Unique words: {0}", queensSpeech.Distinct().Count());
-                foreach (KeyValuePair<string, int> pair in wordFrequency)
+                //sw.WriteLine("File name: {0}", filePath);
+                //sw.WriteLine("All of the words: {0}", queensSpeech.Count());
+                //sw.WriteLine("Unique words: {0}", queensSpeech.Distinct().Count());
+                foreach (KeyValuePair<string, int> pair in wordFrequency.OrderBy(i => i.Value))
                 {
-                    sw.WriteLine("Word = {0}, Count = {1}", pair.Key, pair.Value);
+                    sw.WriteLine(pair.Key);
                 }
 
                 sw.Close();
 
+                return wordFrequency;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                return null;
             }
         }
     }
