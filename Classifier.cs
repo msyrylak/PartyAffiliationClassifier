@@ -11,9 +11,13 @@ namespace PartyAffiliationClassifier
         public static void Train(Dictionary<string, int> trainingFile)
         {
             string[] categories = { "conservative", "labour", "coalition" };
-            string[][] probabilities;
+            int allWords = 0;
+            int uniqueWords = trainingFile.Count();
 
-
+            foreach (KeyValuePair<string, int> wordPair in trainingFile)
+            {
+                allWords += wordPair.Value;
+            }
         }
 
         public static void Classify()

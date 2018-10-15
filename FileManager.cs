@@ -13,7 +13,7 @@ namespace PartyAffiliationClassifier
     {
         public static Dictionary<string, int> FileReader(string filePath)
         {
-            char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\r', '\n' };
+            char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n' };
 
             string[] stopWords = File.ReadLines("C:\\Users\\Maja\\Documents\\Visual Studio 2017\\Projects\\PartyAffiliationClassifier\\stopwords.txt").ToArray();
 
@@ -35,24 +35,44 @@ namespace PartyAffiliationClassifier
                     }
                 }
 
-                //Console.WriteLine("All of the words: {0}", queensSpeech.Count());
-                //Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
+                Console.WriteLine("All of the words: {0}", queensSpeech.Count());
+                Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
 
-                string speechString = string.Join(" ", queensSpeech.ToArray());
+
+                //string speechString = string.Join(" ", queensSpeech.ToArray());
+                //Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
+
+                //foreach (var word in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase))
+                //{
+                //    string dupSearch = word;
+                //    int count = new Regex(dupSearch, RegexOptions.IgnoreCase).Matches(speechString).Count;
+
+                //    wordFrequency.Add(word.ToLower(), count);
+
+                //}
+
+                int count = 0;
+
                 Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
 
-                foreach (var word in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase))
+                foreach (var uniqueWord in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).ToArray())
                 {
-                        string dupSearch = word;
-                        int count = new Regex(dupSearch, RegexOptions.IgnoreCase).Matches(speechString).Count;
-
-                        wordFrequency.Add(word.ToLower(), count);
+                    for (int i = 0; i < queensSpeech.Count; i++)
+                    {
+                        if (uniqueWord.ToLower() == queensSpeech[i].ToLower())
+                        {
+                            count++;
+                        }
+                    }
+                    wordFrequency.Add(uniqueWord.ToLower(), count);
+                    count = 0;
                 }
 
-                //foreach (KeyValuePair<string, int> wordCount in wordFrequency.OrderBy(i => i.Value))
-                //{
-                //    Console.WriteLine("Word = {0}, Count = {1}", wordCount.Key, wordCount.Value);
-                //}
+                foreach (KeyValuePair<string, int> wordCount in wordFrequency) //.OrderBy(i => i.Value))
+                {
+                    Console.WriteLine("Word = {0}, Count = {1}", wordCount.Key, wordCount.Value);
+                }
+
 
                 // write stats to file
                 string path = @"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\Vocabulary.txt";

@@ -1,3 +1,333 @@
+File name: C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\Conservative1.txt
+All of the words: 488
+Unique words: 338
+Word = receiving, Count = 1
+Word = highness, Count = 1
+Word = amir, Count = 1
+Word = kuwait, Count = 1
+Word = excellency, Count = 1
+Word = president, Count = 1
+Word = finland, Count = 1
+Word = october, Count = 1
+Word = march, Count = 1
+Word = zealand, Count = 1
+Word = commonwealth, Count = 1
+Word = heads, Count = 1
+Word = meeting, Count = 1
+Word = november, Count = 1
+Word = attach, Count = 1
+Word = importance, Count = 1
+Word = nato's, Count = 1
+Word = adaptation, Count = 1
+Word = changing, Count = 1
+Word = wider, Count = 1
+Word = protecting, Count = 1
+Word = throughout, Count = 1
+Word = budapest, Count = 1
+Word = summit, Count = 1
+Word = december, Count = 1
+Word = conflict, Count = 1
+Word = prevention, Count = 1
+Word = resolution, Count = 1
+Word = conventional, Count = 1
+Word = armed, Count = 1
+Word = forces, Count = 1
+Word = kingdom's, Count = 1
+Word = deterrent, Count = 1
+Word = settlement, Count = 1
+Word = yugoslavia, Count = 1
+Word = preventing, Count = 1
+Word = weapons, Count = 1
+Word = mass, Count = 1
+Word = destruction, Count = 1
+Word = remains, Count = 1
+Word = indefinite, Count = 1
+Word = unconditional, Count = 1
+Word = extension, Count = 1
+Word = non-proliferation, Count = 1
+Word = pursue, Count = 1
+Word = energetically, Count = 1
+Word = verifiable, Count = 1
+Word = ban, Count = 1
+Word = fight, Count = 1
+Word = terrorism, Count = 1
+Word = elsewhere, Count = 1
+Word = enlargement, Count = 1
+Word = january, Count = 1
+Word = partners, Count = 1
+Word = substance, Count = 1
+Word = central, Count = 1
+Word = aim, Count = 1
+Word = preparing, Count = 1
+Word = eventual, Count = 1
+Word = membership, Count = 1
+Word = concluding, Count = 1
+Word = gatt, Count = 1
+Word = establishment, Count = 1
+Word = world, Count = 1
+Word = organisation, Count = 1
+Word = ensure, Count = 1
+Word = subsidiarity, Count = 1
+Word = applied, Count = 1
+Word = budgetary, Count = 1
+Word = discipline, Count = 1
+Word = combat, Count = 1
+Word = fraud, Count = 1
+Word = participate, Count = 1
+Word = study, Count = 1
+Word = june, Count = 1
+Word = prepare, Count = 1
+Word = 1996, Count = 1
+Word = inter-governmental, Count = 1
+Word = respect, Count = 1
+Word = human, Count = 1
+Word = rights, Count = 1
+Word = substantial, Count = 1
+Word = sustainable, Count = 1
+Word = development, Count = 1
+Word = celebrate, Count = 1
+Word = fiftieth, Count = 1
+Word = anniversary, Count = 1
+Word = capabilities, Count = 1
+Word = particularly, Count = 1
+Word = peacekeeping, Count = 1
+Word = preventive, Count = 1
+Word = diplomacy, Count = 1
+Word = active, Count = 1
+Word = tackling, Count = 1
+Word = misuse, Count = 1
+Word = trafficking, Count = 1
+Word = organised, Count = 1
+Word = crime, Count = 1
+Word = home, Count = 1
+Word = abroad, Count = 1
+Word = consolidation, Count = 1
+Word = stable, Count = 1
+Word = long-term, Count = 1
+Word = prosperity, Count = 1
+Word = china, Count = 1
+Word = sino-british, Count = 1
+Word = joint, Count = 1
+Word = declaration, Count = 1
+Word = smooth, Count = 1
+Word = transition, Count = 1
+Word = 1997, Count = 1
+Word = communist, Count = 1
+Word = middle, Count = 1
+Word = stronger, Count = 1
+Word = pacific, Count = 1
+Word = region, Count = 1
+Word = estimates, Count = 1
+Word = changes, Count = 1
+Word = community's, Count = 1
+Word = resources, Count = 1
+Word = following, Count = 1
+Word = council, Count = 1
+Word = firm, Count = 1
+Word = financial, Count = 1
+Word = designed, Count = 1
+Word = continuing, Count = 1
+Word = growth, Count = 1
+Word = rising, Count = 1
+Word = employment, Count = 1
+Word = based, Count = 1
+Word = permanently, Count = 1
+Word = inflation, Count = 1
+Word = fiscal, Count = 1
+Word = policy, Count = 1
+Word = deficit, Count = 1
+Word = towards, Count = 1
+Word = balance, Count = 1
+Word = medium, Count = 1
+Word = reduce, Count = 1
+Word = share, Count = 1
+Word = income, Count = 1
+Word = enterprise, Count = 1
+Word = labour, Count = 1
+Word = market, Count = 1
+Word = supply, Count = 1
+Word = performance, Count = 1
+Word = increased, Count = 1
+Word = competition, Count = 1
+Word = gas, Count = 1
+Word = industry, Count = 1
+Word = agricultural, Count = 1
+Word = tenancy, Count = 1
+Word = laws, Count = 1
+Word = jobseeker's, Count = 1
+Word = allowance, Count = 1
+Word = reforming, Count = 1
+Word = benefits, Count = 1
+Word = unemployed, Count = 1
+Word = giving, Count = 1
+Word = help, Count = 1
+Word = equalise, Count = 1
+Word = women, Count = 1
+Word = choice, Count = 1
+Word = non-state, Count = 1
+Word = pensions, Count = 1
+Word = programmes, Count = 1
+Word = responsive, Count = 1
+Word = individual, Count = 1
+Word = citizen's, Count = 1
+Word = charter, Count = 1
+Word = tackle, Count = 1
+Word = discrimination, Count = 1
+Word = disabled, Count = 1
+Word = improvements, Count = 1
+Word = management, Count = 1
+Word = health, Count = 1
+Word = provide, Count = 1
+Word = serious, Count = 1
+Word = disorder, Count = 1
+Word = discharged, Count = 1
+Word = hospital, Count = 1
+Word = cared, Count = 1
+Word = supervision, Count = 1
+Word = transfer, Count = 1
+Word = crown, Count = 1
+Word = agents, Count = 1
+Word = commercial, Count = 1
+Word = activities, Count = 1
+Word = atomic, Count = 1
+Word = energy, Count = 1
+Word = authority, Count = 1
+Word = authorise, Count = 1
+Word = construction, Count = 1
+Word = speed, Count = 1
+Word = rail, Count = 1
+Word = link, Count = 1
+Word = london, Count = 1
+Word = channel, Count = 1
+Word = tunnel, Count = 1
+Word = delivery, Count = 1
+Word = strengthened, Count = 1
+Word = agencies, Count = 1
+Word = scotland, Count = 1
+Word = scottish, Count = 1
+Word = criminal, Count = 1
+Word = justice, Count = 1
+Word = northern, Count = 1
+Word = build, Count = 1
+Word = progress, Count = 1
+Word = secure, Count = 1
+Word = accommodation, Count = 1
+Word = founded, Count = 1
+Word = consent, Count = 1
+Word = uphold, Count = 1
+Word = strive, Count = 1
+Word = opportunity, Count = 1
+Word = sections, Count = 1
+Word = close, Count = 1
+Word = constructive, Count = 1
+Word = relations, Count = 1
+Word = republic, Count = 1
+Word = pray, Count = 1
+Word = blessing, Count = 1
+Word = almighty, Count = 1
+Word = god, Count = 1
+Word = counsels, Count = 1
+Word = duke, Count = 2
+Word = south, Count = 2
+Word = africa, Count = 2
+Word = process, Count = 2
+Word = allow, Count = 2
+Word = play, Count = 2
+Word = role, Count = 2
+Word = stability, Count = 2
+Word = enhance, Count = 2
+Word = conference, Count = 2
+Word = co-operation, Count = 2
+Word = implementation, Count = 2
+Word = maintained, Count = 2
+Word = efforts, Count = 2
+Word = peaceful, Count = 2
+Word = former, Count = 2
+Word = proliferation, Count = 2
+Word = priority, Count = 2
+Word = negotiations, Count = 2
+Word = comprehensive, Count = 2
+Word = kingdom, Count = 2
+Word = agreements, Count = 2
+Word = trade, Count = 2
+Word = 1995, Count = 2
+Word = programme, Count = 2
+Word = nations, Count = 2
+Word = drug, Count = 2
+Word = democracy, Count = 2
+Word = remain, Count = 2
+Word = hong, Count = 2
+Word = kong, Count = 2
+Word = develop, Count = 2
+Word = political, Count = 2
+Word = economic, Count = 2
+Word = asia, Count = 2
+Word = service, Count = 2
+Word = laid, Count = 2
+Word = force, Count = 2
+Word = system, Count = 2
+Word = set, Count = 2
+Word = budget, Count = 2
+Word = term, Count = 2
+Word = economy, Count = 2
+Word = england, Count = 2
+Word = wales, Count = 2
+Word = bill, Count = 2
+Word = create, Count = 2
+Word = pension, Count = 2
+Word = equality, Count = 2
+Word = citizen, Count = 2
+Word = line, Count = 2
+Word = principles, Count = 2
+Word = mental, Count = 2
+Word = private, Count = 2
+Word = establish, Count = 2
+Word = ireland, Count = 2
+Word = community, Count = 2
+Word = measures, Count = 2
+Word = lords, Count = 3
+Word = edinburgh, Count = 3
+Word = visit, Count = 3
+Word = national, Count = 3
+Word = environment, Count = 3
+Word = treaty, Count = 3
+Word = nuclear, Count = 3
+Word = principle, Count = 3
+Word = ties, Count = 3
+Word = public, Count = 3
+Word = agreement, Count = 3
+Word = policies, Count = 3
+Word = bring, Count = 3
+Word = sector, Count = 3
+Word = improve, Count = 3
+Word = strengthen, Count = 3
+Word = operation, Count = 3
+Word = law, Count = 3
+Word = house, Count = 4
+Word = commons, Count = 4
+Word = look, Count = 4
+Word = security, Count = 4
+Word = united, Count = 4
+Word = european, Count = 4
+Word = union, Count = 4
+Word = countries, Count = 4
+Word = support, Count = 4
+Word = implement, Count = 4
+Word = people, Count = 4
+Word = low, Count = 4
+Word = age, Count = 4
+Word = seek, Count = 5
+Word = maintain, Count = 5
+Word = reform, Count = 5
+Word = peace, Count = 5
+Word = introduced, Count = 5
+Word = forward, Count = 6
+Word = introduce, Count = 6
+Word = promote, Count = 8
+Word = legislation, Count = 8
+Word = continue, Count = 10
+Word = europe, Count = 10
+Word = government, Count = 20
 receiving
 highness
 amir
@@ -174,7 +504,6 @@ disabled
 improvements
 management
 health
-service;
 provide
 serious
 disorder
@@ -190,7 +519,6 @@ activities
 atomic
 energy
 authority
-sector;
 authorise
 construction
 speed
@@ -326,4 +654,658 @@ promote
 legislation
 continue
 europe
+government
+receiving
+highness
+amir
+kuwait
+excellency
+president
+finland
+october
+march
+zealand
+commonwealth
+heads
+meeting
+november
+attach
+importance
+nato's
+adaptation
+changing
+wider
+protecting
+throughout
+budapest
+summit
+december
+conflict
+prevention
+resolution
+conventional
+armed
+forces
+kingdom's
+deterrent
+settlement
+yugoslavia
+preventing
+weapons
+mass
+destruction
+remains
+indefinite
+unconditional
+extension
+non-proliferation
+pursue
+energetically
+verifiable
+ban
+fight
+terrorism
+elsewhere
+enlargement
+january
+partners
+substance
+central
+aim
+preparing
+eventual
+membership
+concluding
+gatt
+establishment
+world
+organisation
+ensure
+subsidiarity
+applied
+budgetary
+discipline
+combat
+fraud
+participate
+study
+june
+prepare
+1996
+inter-governmental
+respect
+human
+rights
+substantial
+sustainable
+development
+celebrate
+fiftieth
+anniversary
+capabilities
+particularly
+peacekeeping
+preventive
+diplomacy
+active
+tackling
+misuse
+trafficking
+organised
+crime
+home
+abroad
+consolidation
+stable
+long-term
+prosperity
+china
+sino-british
+joint
+declaration
+smooth
+transition
+1997
+communist
+middle
+stronger
+pacific
+region
+estimates
+changes
+community's
+resources
+following
+council
+firm
+financial
+designed
+continuing
+growth
+rising
+employment
+based
+permanently
+inflation
+fiscal
+policy
+deficit
+towards
+balance
+medium
+reduce
+share
+income
+enterprise
+labour
+market
+supply
+performance
+increased
+competition
+gas
+industry
+agricultural
+tenancy
+laws
+jobseeker's
+allowance
+reforming
+benefits
+unemployed
+giving
+help
+equalise
+women
+choice
+non-state
+pensions
+programmes
+responsive
+individual
+citizen's
+charter
+tackle
+discrimination
+disabled
+improvements
+management
+health
+provide
+serious
+disorder
+discharged
+hospital
+cared
+supervision
+transfer
+crown
+agents
+commercial
+activities
+atomic
+energy
+authority
+authorise
+construction
+speed
+rail
+link
+london
+channel
+tunnel
+delivery
+strengthened
+agencies
+scotland
+scottish
+criminal
+justice
+northern
+build
+progress
+secure
+accommodation
+founded
+consent
+uphold
+strive
+opportunity
+sections
+close
+constructive
+relations
+republic
+pray
+blessing
+almighty
+god
+counsels
+duke
+south
+africa
+process
+allow
+play
+role
+stability
+enhance
+conference
+co-operation
+implementation
+maintained
+efforts
+peaceful
+former
+proliferation
+priority
+negotiations
+comprehensive
+kingdom
+agreements
+trade
+1995
+programme
+nations
+drug
+democracy
+remain
+hong
+kong
+develop
+political
+economic
+asia
+service
+laid
+force
+system
+set
+budget
+term
+economy
+england
+wales
+bill
+create
+pension
+equality
+citizen
+line
+principles
+mental
+private
+establish
+ireland
+community
+measures
+lords
+edinburgh
+visit
+national
+environment
+treaty
+nuclear
+principle
+ties
+public
+agreement
+policies
+bring
+sector
+improve
+strengthen
+operation
+law
+house
+commons
+look
+security
+united
+european
+union
+countries
+support
+implement
+people
+low
+age
+seek
+maintain
+reform
+peace
+introduced
+forward
+introduce
+promote
+legislation
+continue
+europe
+government
+receiving
+highness
+amir
+kuwait
+excellency
+president
+finland
+october
+march
+zealand
+commonwealth
+heads
+meeting
+november
+attach
+importance
+nato's
+adaptation
+changing
+allow
+wider
+protecting
+throughout
+budapest
+summit
+december
+conflict
+prevention
+resolution
+conventional
+armed
+forces
+kingdom's
+deterrent
+settlement
+yugoslavia
+preventing
+proliferation
+weapons
+mass
+destruction
+remains
+indefinite
+unconditional
+extension
+non-proliferation
+pursue
+energetically
+verifiable
+ban
+fight
+terrorism
+kingdom
+elsewhere
+enlargement
+january
+partners
+substance
+central
+aim
+preparing
+eventual
+membership
+concluding
+gatt
+establishment
+world
+organisation
+ensure
+principle
+subsidiarity
+applied
+budgetary
+discipline
+combat
+fraud
+participate
+study
+june
+prepare
+1996
+inter-governmental
+respect
+human
+rights
+substantial
+programme
+sustainable
+development
+celebrate
+fiftieth
+anniversary
+capabilities
+particularly
+peacekeeping
+preventive
+diplomacy
+active
+tackling
+misuse
+trafficking
+organised
+crime
+home
+abroad
+consolidation
+stable
+remain
+long-term
+prosperity
+develop
+china
+sino-british
+joint
+declaration
+smooth
+transition
+1997
+communist
+middle
+stronger
+ties
+pacific
+region
+estimates
+force
+changes
+community's
+resources
+following
+agreement
+council
+firm
+financial
+designed
+continuing
+growth
+rising
+employment
+based
+permanently
+low
+inflation
+fiscal
+policy
+set
+budget
+deficit
+towards
+balance
+medium
+term
+reduce
+share
+income
+enterprise
+labour
+market
+supply
+performance
+increased
+competition
+gas
+industry
+agricultural
+tenancy
+laws
+jobseeker's
+allowance
+reforming
+benefits
+unemployed
+giving
+help
+equalise
+pension
+age
+women
+choice
+non-state
+pensions
+programmes
+responsive
+individual
+citizen
+line
+citizen's
+charter
+introduce
+tackle
+discrimination
+disabled
+improvements
+management
+health
+provide
+serious
+mental
+disorder
+discharged
+hospital
+cared
+supervision
+transfer
+crown
+agents
+commercial
+activities
+atomic
+energy
+authority
+authorise
+construction
+operation
+speed
+rail
+link
+london
+channel
+tunnel
+delivery
+strengthened
+establish
+agencies
+scotland
+scottish
+criminal
+justice
+northern
+build
+progress
+secure
+accommodation
+founded
+consent
+uphold
+strive
+opportunity
+sections
+community
+close
+constructive
+relations
+republic
+pray
+blessing
+almighty
+god
+counsels
+duke
+south
+africa
+process
+play
+role
+stability
+enhance
+conference
+co-operation
+implementation
+maintained
+efforts
+peaceful
+former
+priority
+negotiations
+comprehensive
+agreements
+trade
+1995
+nations
+drug
+democracy
+hong
+kong
+implement
+political
+economic
+asia
+peace
+public
+service
+laid
+system
+improve
+strengthen
+economy
+england
+wales
+bill
+create
+equality
+principles
+private
+ireland
+law
+measures
+lords
+edinburgh
+visit
+national
+environment
+treaty
+nuclear
+maintain
+policies
+bring
+sector
+house
+commons
+look
+security
+seek
+united
+european
+union
+countries
+support
+people
+reform
+introduced
+forward
+europe
+promote
+legislation
+continue
 government
