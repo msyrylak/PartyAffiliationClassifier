@@ -11,85 +11,91 @@ namespace PartyAffiliationClassifier
 {
     class FileManager
     {
-        public static Dictionary<string, int> FileReader(string filePath)
+        public static List<Dictionary<string, int>> FileReader(string folderName)
         {
+
             char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n' };
 
-            string[] stopWords = File.ReadLines("C:\\Users\\Maja\\Documents\\Visual Studio 2017\\Projects\\PartyAffiliationClassifier\\stopwords.txt").ToArray();
+            string[] stopWords = File.ReadLines(@".\stopwords.txt").ToArray();
+            List<Dictionary<string, int>> listOfProcessedFiles = new List<Dictionary<string, int>>();
+            List<string> listOfFileNames = new List<string>();
 
             try
             {
-                StreamReader streamReader = new StreamReader(filePath);
-                List<string> queensSpeech = new List<string>();
-                queensSpeech = streamReader.ReadToEnd().Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries).ToList();
+                string path = @"./" + folderName;
+                var files = from file in Directory.EnumerateFiles(path, "*.txt", SearchOption.AllDirectories)
+                            select new
+                            {
+                                File = file,
+                            };
 
-                foreach (var word in queensSpeech.ToList())
+                Console.WriteLine("{0} files found.", files.Count().ToString());
+
+                foreach (var f in files)
                 {
-                    for (int j = 0; j < stopWords.Length; j++)
+                    Console.WriteLine("{0}", f.File);
+                    //listOfFileNames.Add(Path.GetFileNameWithoutExtension(f.File));
+
+                    StreamReader streamReader = new StreamReader(f.File);
+
+
+                    List<string> queensSpeech = new List<string>();
+                    queensSpeech = streamReader.ReadToEnd().Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+                    foreach (var word in queensSpeech.ToList())
                     {
-                        Match match = Regex.Match(stopWords[j], word, RegexOptions.IgnoreCase);
-                        if (match.Success)
+                        for (int j = 0; j < stopWords.Length; j++)
                         {
-                            queensSpeech.Remove(word);
+                            Match match = Regex.Match(stopWords[j], word, RegexOptions.IgnoreCase);
+                            if (match.Success)
+                            {
+                                queensSpeech.Remove(word);
+                            }
                         }
                     }
-                }
 
-                Console.WriteLine("All of the words: {0}", queensSpeech.Count());
-                Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
+                    Console.WriteLine("All of the words: {0}", queensSpeech.Count());
+                    Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
 
+                    //string speechString = string.Join(" ", queensSpeech.ToArray());
+                    //Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
 
-                //string speechString = string.Join(" ", queensSpeech.ToArray());
-                //Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
+                    //foreach (var word in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase))
+                    //{
+                    //    string dupSearch = word;
+                    //    int count = new Regex(dupSearch, RegexOptions.IgnoreCase).Matches(speechString).Count;
 
-                //foreach (var word in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase))
-                //{
-                //    string dupSearch = word;
-                //    int count = new Regex(dupSearch, RegexOptions.IgnoreCase).Matches(speechString).Count;
+                    //    wordFrequency.Add(word.ToLower(), count);
 
-                //    wordFrequency.Add(word.ToLower(), count);
+                    //}
 
-                //}
+                    int count = 0;
 
-                int count = 0;
+                    Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
+                    wordFrequency.Add(Path.GetFileNameWithoutExtension(f.File), 0);
 
-                Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
-
-                foreach (var uniqueWord in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).ToArray())
-                {
-                    for (int i = 0; i < queensSpeech.Count; i++)
+                    foreach (var uniqueWord in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).ToArray())
                     {
-                        if (uniqueWord.ToLower() == queensSpeech[i].ToLower())
+                        for (int i = 0; i < queensSpeech.Count; i++)
                         {
-                            count++;
+                            if (uniqueWord.ToLower() == queensSpeech[i].ToLower())
+                            {
+                                count++;
+                            }
                         }
+                        wordFrequency.Add(uniqueWord.ToLower(), count);
+                        count = 0;
                     }
-                    wordFrequency.Add(uniqueWord.ToLower(), count);
-                    count = 0;
+
+                    foreach (KeyValuePair<string, int> wordCount in wordFrequency) //.OrderBy(i => i.Value))
+                    {
+                        Console.WriteLine("Word = {0}, Count = {1}", wordCount.Key, wordCount.Value);
+                    }
+
+                    listOfProcessedFiles.Add(wordFrequency);
                 }
 
-                foreach (KeyValuePair<string, int> wordCount in wordFrequency) //.OrderBy(i => i.Value))
-                {
-                    Console.WriteLine("Word = {0}, Count = {1}", wordCount.Key, wordCount.Value);
-                }
-
-
-                // write stats to file
-                string path = @"C:\Users\Maja\Documents\Visual Studio 2017\Projects\PartyAffiliationClassifier\QueensSpeech\Vocabulary.txt";
-
-                StreamWriter sw = File.AppendText(path);
-
-                //sw.WriteLine("File name: {0}", filePath);
-                //sw.WriteLine("All of the words: {0}", queensSpeech.Count());
-                //sw.WriteLine("Unique words: {0}", queensSpeech.Distinct().Count());
-                foreach (KeyValuePair<string, int> pair in wordFrequency.OrderBy(i => i.Value))
-                {
-                    sw.WriteLine(pair.Key);
-                }
-
-                sw.Close();
-
-                return wordFrequency;
+                return listOfProcessedFiles;
             }
             catch (Exception ex)
             {

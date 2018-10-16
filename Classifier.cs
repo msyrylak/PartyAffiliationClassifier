@@ -8,15 +8,25 @@ namespace PartyAffiliationClassifier
 {
     class Classifier
     {
-        public static void Train(Dictionary<string, int> trainingFile)
-        {
-            string[] categories = { "conservative", "labour", "coalition" };
-            int allWords = 0;
-            int uniqueWords = trainingFile.Count();
+        enum Categories { Conservative, Coalition, Labour};
 
-            foreach (KeyValuePair<string, int> wordPair in trainingFile)
+        string[,,] probabilitesTable;
+        List<string[,,]> listOfProbabilities = new List<string[,,]>();
+
+        public static void Train(List<Dictionary<string, int>> trainingFiles)
+        {
+            int allWords = 0;
+
+            foreach (Dictionary<string, int> file in trainingFiles)
             {
-                allWords += wordPair.Value;
+                int uniqueWords = file.Count();
+
+                foreach (KeyValuePair<string, int> wordPair in file)
+                {
+                    allWords += wordPair.Value;
+                }
+
+                NaiveBayes(uniqueWords, allWords, file);
             }
         }
 
@@ -24,6 +34,18 @@ namespace PartyAffiliationClassifier
         {
 
         }
+
+
+        private static void NaiveBayes(int uniqueWords, int allWords, Dictionary<string, int> wordFrequency)
+        {
+
+        }
+
+        private static void Calculate()
+        {
+
+        }
+
 
     }
 }
