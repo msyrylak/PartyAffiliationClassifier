@@ -30,9 +30,9 @@ namespace PartyAffiliationClassifier
         public static void Train(List<Dictionary<string, int>> trainingFiles)
         {
             // categories match so that the program can assign files into a category
-            Regex rx_conservative = new Regex(@"\bconservative\b", RegexOptions.IgnoreCase);
-            Regex rx_coalition = new Regex(@"\bcoalition\b", RegexOptions.IgnoreCase);
-            Regex rx_labour = new Regex(@"\blabour\b", RegexOptions.IgnoreCase);
+            Regex rx_conservative = new Regex(@"\bconservative", RegexOptions.IgnoreCase);
+            Regex rx_coalition = new Regex(@"\bcoalition", RegexOptions.IgnoreCase);
+            Regex rx_labour = new Regex(@"\blabour", RegexOptions.IgnoreCase);
 
             // lists for each category 
             List<Dictionary<string, int>> l_conservative = new List<Dictionary<string, int>>();
@@ -41,9 +41,9 @@ namespace PartyAffiliationClassifier
             List<string> vocabulary = new List<string>();
 
             int allWords = 0;
-            int allConservativeWords = 0;
-            int allCoalitionWords = 0;
-            int allLabourWords = 0;
+
+            //copies
+            List<string> entriesToRemove = new List<string>();
 
             foreach (Dictionary<string, int> file in trainingFiles)
             {
@@ -53,26 +53,26 @@ namespace PartyAffiliationClassifier
                 {
                     if (rx_conservative.IsMatch(wordPair.Key) && wordPair.Value == 0)
                     {
-                        file.Remove(wordPair.Key);
+                        entriesToRemove.Add(wordPair.Key);
                         l_conservative.Add(file);
-                        allConservativeWords += wordPair.Value;
                     }
                     else if (rx_coalition.IsMatch(wordPair.Key) && wordPair.Value == 0)
                     {
-                        file.Remove(wordPair.Key);
+                        entriesToRemove.Add(wordPair.Key);
                         l_coalition.Add(file);
-                        allCoalitionWords += wordPair.Value;
                     }
                     else if(rx_labour.IsMatch(wordPair.Key) && wordPair.Value == 0)
                     {
-                        file.Remove(wordPair.Key);
+                        entriesToRemove.Add(wordPair.Key);
                         l_labour.Add(file);
-                        allLabourWords += wordPair.Value;
                     }
                     vocabulary.Add(wordPair.Key);
                 }
-                NaiveBayes(vocabulary, allLabourWords, l_labour);
             }
+            NaiveBayes(vocabulary, l_labour, entriesToRemove);
+            NaiveBayes(vocabulary, l_conservative, entriesToRemove);
+            NaiveBayes(vocabulary, l_coalition, entriesToRemove);
+
         }
 
         public static void Classify()
@@ -80,51 +80,95 @@ namespace PartyAffiliationClassifier
 
         }
 
-        private static void NaiveBayes(List<string> vocabulary, int allCatWords, List<Dictionary<string, int>> category)
+        private static void NaiveBayes(List<string> vocabulary, List<Dictionary<string, int>> category, List<string> listToRemove)
         {
             List<string> uniqueVocabulary = vocabulary.Distinct().ToList();
+
+            for (int i = 0; i < listToRemove.Count; i++)
+            {
+                vocabulary.Remove(listToRemove[i]);
+            }
+
+            foreach (Dictionary<string, int> item in category)
+            {
+                for (int i = 0; i < listToRemove.Count; i++)
+                {
+                    item.Remove(listToRemove[i]);
+                }
+            }
+
+            int allCatWords = 0;
+
+            foreach (Dictionary<string, int> categoryFile in category)
+            {
+                foreach (KeyValuePair<string, int> valuePair in categoryFile)
+                {
+                    allCatWords += valuePair.Value;
+                }
+            }
 
             foreach (Dictionary<string, int> categoryFile in category)
             {
                 if (category.Count() < 2)
                 {
-                    foreach (KeyValuePair<string, int> categoryPair in categoryFile)
-                    {
-                        WordMetrics w = new WordMetrics(categoryPair.Key, categoryPair.Value, CalculateProbability(uniqueVocabulary, categoryFile, allCatWords));
-                    }
+                    CalculateProbability(uniqueVocabulary, categoryFile, allCatWords);
                 }
                 else
                 {
-                    foreach (KeyValuePair<string, int> categoryPair in categoryFile)
-                    {
-                        WordMetrics w = new WordMetrics(categoryPair.Key, categoryPair.Value, CalculateProbability(uniqueVocabulary, categoryFile, allCatWords));
-                    }
+                    CalculateProbability(uniqueVocabulary, category, allCatWords);
                 }
-                
             }
         }
 
-        private static float CalculateProbability(List<string> uniqueVocabulary, Dictionary<string, int> categoryFile, int allCatWords)
+        private static List<WordMetrics> CalculateProbability(List<string> uniqueVocabulary, Dictionary<string, int> categoryFile, int allCatWords)
         {
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
+            List<WordMetrics> l_wordMetrics = new List<WordMetrics>();
 
+            foreach (KeyValuePair<string, int> word in categoryFile)
+            {
+                float probabilityResult = ((float)(word.Value + 1) / (float)(uniqueWords + allCatWords));
+                WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult);
+                l_wordMetrics.Add(wordMetrics);
+            }
             
-
-            float probability;
-
-            return 0;
+            return l_wordMetrics;
         }
 
-        private static float CalculateProbability(List<string> uniqueVocabulary, List<Dictionary<string, int>> categoryFile, int allCatWords)
+        private static List<WordMetrics> CalculateProbability(List<string> uniqueVocabulary, List<Dictionary<string, int>> categoryFiles, int allCatWords)
         {
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
+            List<WordMetrics> l_wordMetrics = new List<WordMetrics>();
+            Dictionary<string, int> dictCopy = new Dictionary<string, int>();
+            
+            // if the keys are the same just add their values
+            ILookup<string, int> lookup = null;
+            int frequencyValue = 0;
+            foreach (Dictionary<string, int> dictionary in categoryFiles)
+            {
+                foreach (KeyValuePair<string, int> kvp in dictionary)
+                {
+                    if (dictCopy.ContainsKey(kvp.Key))
+                    {
+                        dictCopy[kvp.Key] += kvp.Value; 
+                    }
+                    else
+                    {
+                        dictCopy.Add(kvp.Key, kvp.Value);
+                    }
+                }
+            }
 
+            foreach (KeyValuePair<string, int> word in dictCopy)
+            {
+                float probabilityResult = ((float)(word.Value + 1) / (float)(uniqueWords + allCatWords));
+                WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult);
+                l_wordMetrics.Add(wordMetrics);
+            }
 
-            float probability;
-
-            return 0;
+            return l_wordMetrics;
         }
 
 
