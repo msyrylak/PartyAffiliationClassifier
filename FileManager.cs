@@ -13,6 +13,7 @@ namespace PartyAffiliationClassifier
     {
         public static List<Dictionary<string, int>> FileReader(string folderName)
         {
+            // TODO overload for one file 
 
             char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n' };
 

@@ -34,6 +34,8 @@ namespace PartyAffiliationClassifier
             Regex rx_coalition = new Regex(@"\bcoalition", RegexOptions.IgnoreCase);
             Regex rx_labour = new Regex(@"\blabour", RegexOptions.IgnoreCase);
 
+            string categoryName = " ";
+
             // lists for each category 
             List<Dictionary<string, int>> l_conservative = new List<Dictionary<string, int>>();
             List<Dictionary<string, int>> l_coalition = new List<Dictionary<string, int>>();
@@ -42,7 +44,7 @@ namespace PartyAffiliationClassifier
 
             int allWords = 0;
 
-            //copies
+            // copies
             List<string> entriesToRemove = new List<string>();
 
             foreach (Dictionary<string, int> file in trainingFiles)
@@ -55,24 +57,26 @@ namespace PartyAffiliationClassifier
                     {
                         entriesToRemove.Add(wordPair.Key);
                         l_conservative.Add(file);
+                        categoryName = "Conservative";
                     }
                     else if (rx_coalition.IsMatch(wordPair.Key) && wordPair.Value == 0)
                     {
                         entriesToRemove.Add(wordPair.Key);
                         l_coalition.Add(file);
+                        categoryName = "Coalition";
                     }
                     else if(rx_labour.IsMatch(wordPair.Key) && wordPair.Value == 0)
                     {
                         entriesToRemove.Add(wordPair.Key);
                         l_labour.Add(file);
+                        categoryName = "Labour";
                     }
                     vocabulary.Add(wordPair.Key);
                 }
             }
-            NaiveBayes(vocabulary, l_labour, entriesToRemove);
-            NaiveBayes(vocabulary, l_conservative, entriesToRemove);
-            NaiveBayes(vocabulary, l_coalition, entriesToRemove);
-
+            NaiveBayes(categoryName, vocabulary, l_labour, entriesToRemove);
+            NaiveBayes(categoryName, vocabulary, l_conservative, entriesToRemove);
+            NaiveBayes(categoryName, vocabulary, l_coalition, entriesToRemove);
         }
 
         public static void Classify()
@@ -80,7 +84,7 @@ namespace PartyAffiliationClassifier
 
         }
 
-        private static void NaiveBayes(List<string> vocabulary, List<Dictionary<string, int>> category, List<string> listToRemove)
+        private static void NaiveBayes(string categoryName, List<string> vocabulary, List<Dictionary<string, int>> category, List<string> listToRemove)
         {
             List<string> uniqueVocabulary = vocabulary.Distinct().ToList();
 
@@ -111,40 +115,42 @@ namespace PartyAffiliationClassifier
             {
                 if (category.Count() < 2)
                 {
-                    CalculateProbability(uniqueVocabulary, categoryFile, allCatWords);
+                    CalculateProbability(categoryName, uniqueVocabulary, categoryFile, allCatWords);
                 }
                 else
                 {
-                    CalculateProbability(uniqueVocabulary, category, allCatWords);
+                    CalculateProbability(categoryName, uniqueVocabulary, category, allCatWords);
                 }
             }
         }
 
-        private static List<WordMetrics> CalculateProbability(List<string> uniqueVocabulary, Dictionary<string, int> categoryFile, int allCatWords)
+        private static Dictionary<WordMetrics, string> CalculateProbability(string categoryName, List<string> uniqueVocabulary,
+            Dictionary<string, int> categoryFile, int allCatWords)
         {
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
             List<WordMetrics> l_wordMetrics = new List<WordMetrics>();
+            Dictionary<WordMetrics, string> d_wordMetrics = new Dictionary<WordMetrics, string>();
 
             foreach (KeyValuePair<string, int> word in categoryFile)
             {
-                float probabilityResult = ((float)(word.Value + 1) / (float)(uniqueWords + allCatWords));
+                float probabilityResult = ((word.Value + 1) / (float)(uniqueWords + allCatWords));
                 WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult);
-                l_wordMetrics.Add(wordMetrics);
+                d_wordMetrics.Add(wordMetrics, categoryName);
             }
-            
-            return l_wordMetrics;
+
+            return d_wordMetrics;
         }
 
-        private static List<WordMetrics> CalculateProbability(List<string> uniqueVocabulary, List<Dictionary<string, int>> categoryFiles, int allCatWords)
+        private static Dictionary<WordMetrics, string> CalculateProbability(string categoryName, List<string> uniqueVocabulary,
+            List<Dictionary<string, int>> categoryFiles, int allCatWords)
         {
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
-            List<WordMetrics> l_wordMetrics = new List<WordMetrics>();
             Dictionary<string, int> dictCopy = new Dictionary<string, int>();
-            
+            Dictionary<WordMetrics, string> d_wordMetrics = new Dictionary<WordMetrics, string>();
+
             // if the keys are the same just add their values
-            ILookup<string, int> lookup = null;
             int frequencyValue = 0;
             foreach (Dictionary<string, int> dictionary in categoryFiles)
             {
@@ -163,12 +169,12 @@ namespace PartyAffiliationClassifier
 
             foreach (KeyValuePair<string, int> word in dictCopy)
             {
-                float probabilityResult = ((float)(word.Value + 1) / (float)(uniqueWords + allCatWords));
+                float probabilityResult = ((word.Value + 1) / (float)(uniqueWords + allCatWords));
                 WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult);
-                l_wordMetrics.Add(wordMetrics);
+                d_wordMetrics.Add(wordMetrics, categoryName);
             }
 
-            return l_wordMetrics;
+            return d_wordMetrics;
         }
 
 
