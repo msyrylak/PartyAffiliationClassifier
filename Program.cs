@@ -32,6 +32,10 @@ namespace PartyAffiliationClassifier
             string newFile3 = Console.ReadLine();
             classifier.Classify(trainedFiles, newFile3);
 
+            Console.WriteLine("Specify a file path");
+            string newFile4 = Console.ReadLine();
+            classifier.Classify(trainedFiles, newFile4);
+
 
             Console.ReadLine();
         }

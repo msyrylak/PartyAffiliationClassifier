@@ -62,9 +62,9 @@ namespace PartyAffiliationClassifier
             }
 
             List<List<WordMetrics>> wordMetrics = new List<List<WordMetrics>>();
-            wordMetrics.Add(NaiveBayes(categoryName1, vocabulary, l_labour, entriesToRemove, noOfTrainingFiles));
-            wordMetrics.Add(NaiveBayes(categoryName2, vocabulary, l_conservative, entriesToRemove, noOfTrainingFiles));
-            wordMetrics.Add(NaiveBayes(categoryName3, vocabulary, l_coalition, entriesToRemove, noOfTrainingFiles));
+            wordMetrics.Add(NaiveBayes(categoryName3, vocabulary, l_labour, entriesToRemove, noOfTrainingFiles));
+            wordMetrics.Add(NaiveBayes(categoryName1, vocabulary, l_conservative, entriesToRemove, noOfTrainingFiles));
+            wordMetrics.Add(NaiveBayes(categoryName2, vocabulary, l_coalition, entriesToRemove, noOfTrainingFiles));
 
             return wordMetrics;
         }
@@ -192,11 +192,11 @@ namespace PartyAffiliationClassifier
             //Dictionary<string, float> probabilitiesClassification = new Dictionary<string, float>();
             //Dictionary<string, float> categoryProbabilities = new Dictionary<string, float>();
 
-            foreach (var newWord in fileToClassify)
+            foreach (var list in trainedWords)
             {
-                foreach (var list in trainedWords)
+                if (list[0].Value == "Conservative")
                 {
-                    if (list[0].Value == "Conservative")
+                    foreach (var newWord in fileToClassify)
                     {
                         for (int i = 1; i < list.Count(); i++)
                         {
@@ -205,9 +205,13 @@ namespace PartyAffiliationClassifier
                                 probabilityConservative += list[i].Probability;
                             }
                         }
-                        probabilityConservative *= list[0].Probability;
                     }
-                    if (list[0].Value == "Labour")
+                    probabilityConservative *= list[0].Probability;
+                }
+
+                if (list[0].Value == "Labour")
+                {
+                    foreach (var newWord in fileToClassify)
                     {
                         for (int i = 1; i < list.Count(); i++)
                         {
@@ -216,10 +220,15 @@ namespace PartyAffiliationClassifier
                                 probabilityLabour += list[i].Probability;
                             }
                         }
-                        probabilityLabour *= list[0].Probability;
                     }
-                    if (list[0].Value == "Coalition")
+                    probabilityLabour *= list[0].Probability;
+                }
+
+                if (list[0].Value == "Coalition")
+                {
+                    foreach (var newWord in fileToClassify)
                     {
+
                         for (int i = 1; i < list.Count(); i++)
                         {
                             if (newWord.Key == list[i].Value)
@@ -227,11 +236,11 @@ namespace PartyAffiliationClassifier
                                 probabilityCoalition += list[i].Probability;
                             }
                         }
-                        probabilityCoalition *= list[0].Probability;
                     }
-                    //probabilitiesClassification.Add(list[0].Value, probabilitiesSum * list[0].Probability);
                 }
+                probabilityCoalition *= list[0].Probability;
             }
+
             // comparison
             if (probabilityConservative > probabilityLabour && probabilityConservative > probabilityCoalition)
             {
@@ -246,5 +255,6 @@ namespace PartyAffiliationClassifier
                 Console.WriteLine("File belongs to Coalition category");
             }
         }
+
     }
 }

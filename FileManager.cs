@@ -13,8 +13,6 @@ namespace PartyAffiliationClassifier
     {
         public static List<Dictionary<string, int>> FileReaderTraining(string folderName)
         {
-            // TODO overload for one file 
-
             char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n' };
 
             string[] stopWords = File.ReadLines(@".\stopwords.txt").ToArray();
@@ -106,8 +104,6 @@ namespace PartyAffiliationClassifier
         }
         public static Dictionary<string, int> FileReaderClassification(string fileName)
         {
-            // TODO overload for one file 
-
             char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n' };
 
             string[] stopWords = File.ReadLines(@".\stopwords.txt").ToArray();
