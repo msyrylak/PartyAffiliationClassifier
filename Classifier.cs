@@ -66,6 +66,9 @@ namespace PartyAffiliationClassifier
             wordMetrics.Add(NaiveBayes(categoryName1, vocabulary, l_conservative, entriesToRemove, noOfTrainingFiles));
             wordMetrics.Add(NaiveBayes(categoryName2, vocabulary, l_coalition, entriesToRemove, noOfTrainingFiles));
 
+            FileManager fm = new FileManager();
+            fm.WriteTraining(wordMetrics);
+
             return wordMetrics;
         }
 
@@ -76,7 +79,6 @@ namespace PartyAffiliationClassifier
             int numberOfTrainingFiles)
         {
             // training
-
             List<string> uniqueVocabulary = vocabulary.Distinct().ToList();
             List<WordMetrics> probabilities = new List<WordMetrics>();
 
@@ -181,16 +183,11 @@ namespace PartyAffiliationClassifier
 
         public void Classify(List<List<WordMetrics>> trainedWords /* wordMetrics*/, string newFile)
         {
-            // get probabilities of words in given category, multiply by the category probability (noOfFilesInCat/numberOfDocs)
-            // add it all up and depending to which category probability the sum is closer, classify
-
-            Dictionary<string, int> fileToClassify = FileManager.FileReaderClassification(newFile);
+            FileManager fileManager = new FileManager();
+            Dictionary<string, int> fileToClassify = fileManager.FileReaderClassification(newFile);
             float probabilityConservative = 0;
             float probabilityLabour = 0;
             float probabilityCoalition = 0;
-
-            //Dictionary<string, float> probabilitiesClassification = new Dictionary<string, float>();
-            //Dictionary<string, float> categoryProbabilities = new Dictionary<string, float>();
 
             foreach (var list in trainedWords)
             {
@@ -237,22 +234,28 @@ namespace PartyAffiliationClassifier
                             }
                         }
                     }
+                    probabilityCoalition *= list[0].Probability;
                 }
-                probabilityCoalition *= list[0].Probability;
             }
+            Console.WriteLine("Coalition: " + probabilityCoalition);
+            Console.WriteLine("Conservative: " + probabilityConservative);
+            Console.WriteLine("Labour: " + probabilityLabour);
 
             // comparison
             if (probabilityConservative > probabilityLabour && probabilityConservative > probabilityCoalition)
             {
                 Console.WriteLine("File belongs to Conservative category");
+                Console.WriteLine();
             }
             if (probabilityLabour > probabilityConservative && probabilityLabour > probabilityCoalition)
             {
                 Console.WriteLine("File belongs to Labour category");
+                Console.WriteLine();
             }
             if (probabilityCoalition > probabilityLabour && probabilityCoalition > probabilityConservative)
             {
                 Console.WriteLine("File belongs to Coalition category");
+                Console.WriteLine();
             }
         }
 

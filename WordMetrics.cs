@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PartyAffiliationClassifier
 {
+    [Serializable()]
     class WordMetrics
     {
         private string value;

@@ -12,32 +12,63 @@ namespace PartyAffiliationClassifier
     {
         static void Main(string[] args)
         {
-
-            Console.WriteLine("Welcome to the Party Affiliation Classifier!");
-            Console.WriteLine("Name of the folder you wish to classify/train on");
-            string folderName = Console.ReadLine();
-
+            bool quit = false;
+            string fileToClassify;
+            string answer;
             Classifier classifier = new Classifier();
-            List<List<WordMetrics>> trainedFiles = classifier.Train(FileManager.FileReaderTraining(folderName));
+            List<List<WordMetrics>> trainedFiles = new List<List<WordMetrics>>();
+            FileManager fileManager = new FileManager();
 
-            Console.WriteLine("Specify a file path");
-            string newFile = Console.ReadLine();
-            classifier.Classify(trainedFiles, newFile);
+            do
+            {
+                Console.WriteLine("Welcome to the Party Affiliation Classifier!");
+                Console.WriteLine("Choose the action you want to perform: " + '\n' + "a) train" + '\n' +
+                    "b) classify a document" + '\n' + "c) close the program");
+                answer = Console.ReadLine();
 
-            Console.WriteLine("Specify a file path");
-            string newFile2 = Console.ReadLine();
-            classifier.Classify(trainedFiles, newFile2);
+                switch (answer)
+                {
+                    case "a":
+                        Console.WriteLine("You chose training!");
+                        Console.WriteLine();
+                        Console.WriteLine("Specify a folder from which you wish to train the machine.");
 
-            Console.WriteLine("Specify a file path");
-            string newFile3 = Console.ReadLine();
-            classifier.Classify(trainedFiles, newFile3);
+                        string folderName = Console.ReadLine();
 
-            Console.WriteLine("Specify a file path");
-            string newFile4 = Console.ReadLine();
-            classifier.Classify(trainedFiles, newFile4);
+                        trainedFiles = classifier.Train(fileManager.FileReaderTraining(folderName));
 
+                        Console.WriteLine("Do you want to classify a document? (Y/N)");
+                        string ans = Console.ReadLine();
+                        Console.WriteLine();
+                        if (ans.ToLower() == "y")
+                        {
+                            Console.WriteLine("Specify a file path");
+                            fileToClassify = Console.ReadLine();
+                            classifier.Classify(trainedFiles, fileToClassify);
+                        }
+                        else
+                        {
+                            quit = true;
+                        }
+                        break;
 
-            Console.ReadLine();
+                    case "b":
+                        Console.WriteLine("You chose file classification!");
+                        Console.WriteLine("Specify a file path");
+                        fileToClassify = Console.ReadLine();
+                        trainedFiles = fileManager.ReadTraining();
+                        classifier.Classify(trainedFiles, fileToClassify);
+                        break;
+
+                    case "c":
+                        quit = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Sorry, the answer not recognised.");
+                        break;
+                }
+            } while (!quit);
         }
     }
 }
