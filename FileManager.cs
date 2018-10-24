@@ -103,7 +103,7 @@ namespace PartyAffiliationClassifier
                 return null;
             }
         }
-        public Dictionary<string, int> FileReaderClassification(string fileName)
+        public List<string> FileReaderClassification(string fileName)
         {
             char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n' };
 
@@ -135,20 +135,7 @@ namespace PartyAffiliationClassifier
                 Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
                 int count = 0;
 
-                foreach (var uniqueWord in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).ToArray())
-                {
-                    for (int i = 0; i < queensSpeech.Count; i++)
-                    {
-                        if (uniqueWord.ToLower() == queensSpeech[i].ToLower())
-                        {
-                            count++;
-                        }
-                    }
-                    wordFrequency.Add(uniqueWord.ToLower(), count);
-                    count = 0;
-                }
-
-                return wordFrequency;
+                return queensSpeech;
             }
             catch (Exception ex)
             {
@@ -161,14 +148,12 @@ namespace PartyAffiliationClassifier
         {
             try
             {
-                    string date;
-                    date = DateTime.Now.ToString("dd/MM/yyyy");
-                    string fileToWrite = @".\training.bin";
+                string fileToWrite = @".\training.bin";
 
-                    Stream stream = File.Open(fileToWrite, FileMode.Create);
-                    BinaryFormatter binFormatter = new BinaryFormatter();
+                Stream stream = File.Open(fileToWrite, FileMode.Create);
+                BinaryFormatter binFormatter = new BinaryFormatter();
 
-                    binFormatter.Serialize(stream, trainedWords);
+                binFormatter.Serialize(stream, trainedWords);
             }
             catch (Exception ex)
             {

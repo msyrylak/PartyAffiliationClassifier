@@ -95,25 +95,15 @@ namespace PartyAffiliationClassifier
                 }
             }
 
-            int allCatWords = 0;
-
-            foreach (Dictionary<string, int> categoryFile in category)
-            {
-                foreach (KeyValuePair<string, int> valuePair in categoryFile)
-                {
-                    allCatWords += valuePair.Value;
-                }
-            }
-
             foreach (Dictionary<string, int> categoryFile in category)
             {
                 if (category.Count() < 2)
                 {
-                    probabilities = CalculateProbability(categoryName, uniqueVocabulary, categoryFile, allCatWords, numberOfTrainingFiles);
+                    probabilities = CalculateProbability(categoryName, uniqueVocabulary, categoryFile, numberOfTrainingFiles);
                 }
                 else
                 {
-                    probabilities = CalculateProbability(categoryName, uniqueVocabulary, category, allCatWords, numberOfTrainingFiles);
+                    probabilities = CalculateProbability(categoryName, uniqueVocabulary, category, numberOfTrainingFiles);
                 }
             }
             return probabilities;
@@ -121,7 +111,7 @@ namespace PartyAffiliationClassifier
 
         // probability for just one file 
         private List<WordMetrics> CalculateProbability(string categoryName, List<string> uniqueVocabulary,
-            Dictionary<string, int> categoryFile, int allCatWords, int numberOfTrainingFiles)
+            Dictionary<string, int> categoryFile, int numberOfTrainingFiles)
         {
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
@@ -130,6 +120,13 @@ namespace PartyAffiliationClassifier
 
             WordMetrics categoryWord = new WordMetrics(categoryName, 1, categoryProbability);
             l_wordMetrics.Add(categoryWord);
+
+            int allCatWords = 0;
+
+            foreach (KeyValuePair<string, int> word in categoryFile)
+            {
+                allCatWords += word.Value;
+            }
 
             foreach (KeyValuePair<string, int> word in categoryFile)
             {
@@ -143,7 +140,7 @@ namespace PartyAffiliationClassifier
 
         // probability for more than one file in the category
         private List<WordMetrics> CalculateProbability(string categoryName, List<string> uniqueVocabulary,
-            List<Dictionary<string, int>> categoryFiles, int allCatWords, int numberOfTrainingFiles)
+            List<Dictionary<string, int>> categoryFiles, int numberOfTrainingFiles)
         {
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
@@ -171,6 +168,13 @@ namespace PartyAffiliationClassifier
                 }
             }
 
+            int allCatWords = 0;
+
+            foreach (KeyValuePair<string, int> frequency in dictCopy)
+            {
+                allCatWords += frequency.Value;
+            }
+
             foreach (KeyValuePair<string, int> word in dictCopy)
             {
                 float probabilityResult = (word.Value + 1) / (float)(uniqueWords + allCatWords);
@@ -184,7 +188,7 @@ namespace PartyAffiliationClassifier
         public void Classify(List<List<WordMetrics>> trainedWords /* wordMetrics*/, string newFile)
         {
             FileManager fileManager = new FileManager();
-            Dictionary<string, int> fileToClassify = fileManager.FileReaderClassification(newFile);
+            List<string> fileToClassify = fileManager.FileReaderClassification(newFile);
             float probabilityConservative = 0;
             float probabilityLabour = 0;
             float probabilityCoalition = 0;
@@ -197,7 +201,7 @@ namespace PartyAffiliationClassifier
                     {
                         for (int i = 1; i < list.Count(); i++)
                         {
-                            if (newWord.Key == list[i].Value)
+                            if (newWord == list[i].Value)
                             {
                                 probabilityConservative += list[i].Probability;
                             }
@@ -212,7 +216,7 @@ namespace PartyAffiliationClassifier
                     {
                         for (int i = 1; i < list.Count(); i++)
                         {
-                            if (newWord.Key == list[i].Value)
+                            if (newWord == list[i].Value)
                             {
                                 probabilityLabour += list[i].Probability;
                             }
@@ -228,7 +232,7 @@ namespace PartyAffiliationClassifier
 
                         for (int i = 1; i < list.Count(); i++)
                         {
-                            if (newWord.Key == list[i].Value)
+                            if (newWord == list[i].Value)
                             {
                                 probabilityCoalition += list[i].Probability;
                             }
