@@ -189,9 +189,9 @@ namespace PartyAffiliationClassifier
         {
             FileManager fileManager = new FileManager();
             List<string> fileToClassify = fileManager.FileReaderClassification(newFile);
-            float probabilityConservative = 0;
-            float probabilityLabour = 0;
-            float probabilityCoalition = 0;
+            double probabilityConservative = 0;
+            double probabilityLabour = 0;
+            double probabilityCoalition = 0;
 
             foreach (var list in trainedWords)
             {
@@ -201,13 +201,13 @@ namespace PartyAffiliationClassifier
                     {
                         for (int i = 1; i < list.Count(); i++)
                         {
-                            if (newWord == list[i].Value)
+                            if (newWord.ToLower() == list[i].Value)
                             {
-                                probabilityConservative += list[i].Probability;
+                                probabilityConservative += Math.Log(list[i].Probability);
                             }
                         }
                     }
-                    probabilityConservative *= list[0].Probability;
+                    probabilityConservative *= Math.Log(list[0].Probability);
                 }
 
                 if (list[0].Value == "Labour")
@@ -216,13 +216,13 @@ namespace PartyAffiliationClassifier
                     {
                         for (int i = 1; i < list.Count(); i++)
                         {
-                            if (newWord == list[i].Value)
+                            if (newWord.ToLower() == list[i].Value)
                             {
-                                probabilityLabour += list[i].Probability;
+                                probabilityLabour += Math.Log(list[i].Probability);
                             }
                         }
                     }
-                    probabilityLabour *= list[0].Probability;
+                    probabilityLabour *= Math.Log(list[0].Probability);
                 }
 
                 if (list[0].Value == "Coalition")
@@ -232,13 +232,13 @@ namespace PartyAffiliationClassifier
 
                         for (int i = 1; i < list.Count(); i++)
                         {
-                            if (newWord == list[i].Value)
+                            if (newWord.ToLower() == list[i].Value)
                             {
-                                probabilityCoalition += list[i].Probability;
+                                probabilityCoalition += Math.Log(list[i].Probability);
                             }
                         }
                     }
-                    probabilityCoalition *= list[0].Probability;
+                    probabilityCoalition *= Math.Log(list[0].Probability);
                 }
             }
             Console.WriteLine("Coalition: " + probabilityCoalition);

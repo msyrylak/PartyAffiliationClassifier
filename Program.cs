@@ -37,12 +37,12 @@ namespace PartyAffiliationClassifier
 
                         trainedFiles = classifier.Train(fileManager.FileReaderTraining(folderName));
 
-                        Console.WriteLine("Do you want to classify a document? (Y/N)");
+                        Console.WriteLine("Training finished! Do you want to classify a document now? (Y/N)");
                         string ans = Console.ReadLine();
                         Console.WriteLine();
                         if (ans.ToLower() == "y")
                         {
-                            Console.WriteLine("Specify a file path");
+                            Console.WriteLine("Type in a file name.");
                             fileToClassify = Console.ReadLine();
                             classifier.Classify(trainedFiles, fileToClassify);
                         }
@@ -54,7 +54,7 @@ namespace PartyAffiliationClassifier
 
                     case "b":
                         Console.WriteLine("You chose file classification!");
-                        Console.WriteLine("Specify a file path");
+                        Console.WriteLine("Type in a file name");
                         fileToClassify = Console.ReadLine();
                         trainedFiles = fileManager.ReadTraining();
                         classifier.Classify(trainedFiles, fileToClassify);

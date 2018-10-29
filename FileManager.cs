@@ -14,7 +14,7 @@ namespace PartyAffiliationClassifier
     {
         public List<Dictionary<string, int>> FileReaderTraining(string folderName)
         {
-            char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n' };
+            char[] delimiterChars = { ' ', ',', '.', ':', ';', '\'', '\t', '\r', '\n' };
 
             string[] stopWords = File.ReadLines(@".\stopwords.txt").ToArray();
             List<Dictionary<string, int>> listOfProcessedFiles = new List<Dictionary<string, int>>();
@@ -105,7 +105,7 @@ namespace PartyAffiliationClassifier
         }
         public List<string> FileReaderClassification(string fileName)
         {
-            char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n' };
+            char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n', '\''};
 
             string[] stopWords = File.ReadLines(@".\stopwords.txt").ToArray();
             List<string> listOfFileNames = new List<string>();
