@@ -34,7 +34,6 @@ namespace PartyAffiliationClassifier
                 foreach (var f in files)
                 {
                     Console.WriteLine("{0}", f.File);
-                    //listOfFileNames.Add(Path.GetFileNameWithoutExtension(f.File));
 
                     StreamReader streamReader = new StreamReader(f.File);
 

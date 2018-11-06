@@ -11,13 +11,13 @@ namespace PartyAffiliationClassifier
     {
         private string value;
         private int frequency;
-        private float probability;
+        private double probability;
 
         public string Value { get => value; set => this.value = value; }
         public int Frequency { get => frequency; set => frequency = value; }
-        public float Probability { get => probability; set => probability = value; }
+        public double Probability { get => probability; set => probability = value; }
 
-        public WordMetrics(string word, int recurrence, float calculation)
+        public WordMetrics(string word, int recurrence, double calculation)
         {
             value = word;
             frequency = recurrence;

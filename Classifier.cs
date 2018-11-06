@@ -116,7 +116,7 @@ namespace PartyAffiliationClassifier
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
             List<WordMetrics> l_wordMetrics = new List<WordMetrics>();
-            float categoryProbability = 1 / (float)numberOfTrainingFiles;
+            double categoryProbability = 1 / (double)numberOfTrainingFiles;
 
             WordMetrics categoryWord = new WordMetrics(categoryName, 1, categoryProbability);
             l_wordMetrics.Add(categoryWord);
@@ -130,7 +130,7 @@ namespace PartyAffiliationClassifier
 
             foreach (KeyValuePair<string, int> word in categoryFile)
             {
-                float probabilityResult = ((word.Value + 1) / (float)(uniqueWords + allCatWords));
+                double probabilityResult = ((word.Value + 1) / (double)(uniqueWords + allCatWords));
                 WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult);
                 l_wordMetrics.Add(wordMetrics);
             }
@@ -146,7 +146,7 @@ namespace PartyAffiliationClassifier
             int uniqueWords = uniqueVocabulary.Count();
             Dictionary<string, int> dictCopy = new Dictionary<string, int>();
             List<WordMetrics> l_wordMetrics = new List<WordMetrics>();
-            float categoryProbability = categoryFiles.Count() / (float)numberOfTrainingFiles;
+            double categoryProbability = categoryFiles.Count() / (double)numberOfTrainingFiles;
 
             WordMetrics categoryWord = new WordMetrics(categoryName, categoryFiles.Count(), categoryProbability);
             l_wordMetrics.Add(categoryWord);
@@ -177,7 +177,7 @@ namespace PartyAffiliationClassifier
 
             foreach (KeyValuePair<string, int> word in dictCopy)
             {
-                float probabilityResult = (word.Value + 1) / (float)(uniqueWords + allCatWords);
+                double probabilityResult = (word.Value + 1) / (double)(uniqueWords + allCatWords);
                 WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult);
                 l_wordMetrics.Add(wordMetrics);
             }
@@ -207,7 +207,7 @@ namespace PartyAffiliationClassifier
                             }
                         }
                     }
-                    probabilityConservative *= Math.Log(list[0].Probability);
+                    probabilityConservative += Math.Log(list[0].Probability);
                 }
 
                 if (list[0].Value == "Labour")
@@ -222,7 +222,7 @@ namespace PartyAffiliationClassifier
                             }
                         }
                     }
-                    probabilityLabour *= Math.Log(list[0].Probability);
+                    probabilityLabour += Math.Log(list[0].Probability);
                 }
 
                 if (list[0].Value == "Coalition")
@@ -238,7 +238,7 @@ namespace PartyAffiliationClassifier
                             }
                         }
                     }
-                    probabilityCoalition *= Math.Log(list[0].Probability);
+                    probabilityCoalition += Math.Log(list[0].Probability);
                 }
             }
             Console.WriteLine("Coalition: " + probabilityCoalition);
