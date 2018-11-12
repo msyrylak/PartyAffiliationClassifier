@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PartyAffiliationClassifier
 {
+    // class that stores the probability and frequency in a category for each word
     [Serializable()]
     class WordMetrics
     {

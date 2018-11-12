@@ -38,9 +38,9 @@ namespace PartyAffiliationClassifier
                         trainedFiles = classifier.Train(fileManager.FileReaderTraining(folderName));
 
                         Console.WriteLine("Training finished! Do you want to classify a document now? (Y/N)");
-                        string ans = Console.ReadLine();
+                        string classificationAnswer = Console.ReadLine();
                         Console.WriteLine();
-                        if (ans.ToLower() == "y")
+                        if (classificationAnswer.ToLower() == "y")
                         {
                             Console.WriteLine("Type in a file name.");
                             fileToClassify = Console.ReadLine();

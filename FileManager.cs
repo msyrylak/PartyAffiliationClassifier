@@ -12,6 +12,15 @@ namespace PartyAffiliationClassifier
 {
     class FileManager
     {
+        /// <summary>
+        /// This function is for training part of the program,
+        /// It takes in the name of the folder with training files, iterates through it 
+        /// and for each file removes the stop words and then creates a dictionary with 
+        /// a frequency of each word in the file and then adds it to a list of dictionaries and that list 
+        /// is returned.
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <returns></returns>
         public List<Dictionary<string, int>> FileReaderTraining(string folderName)
         {
             char[] delimiterChars = { ' ', ',', '.', ':', ';', '\'', '\t', '\r', '\n' };
@@ -22,6 +31,7 @@ namespace PartyAffiliationClassifier
 
             try
             {
+                // take in the folder name and iterate through it to look for .txt files
                 string path = @"./" + folderName;
                 var files = from file in Directory.EnumerateFiles(path, "*.txt", SearchOption.AllDirectories)
                             select new
@@ -31,6 +41,7 @@ namespace PartyAffiliationClassifier
 
                 Console.WriteLine("{0} files found.", files.Count().ToString());
 
+                // foreach txt file i nthe folder
                 foreach (var f in files)
                 {
                     Console.WriteLine("{0}", f.File);
@@ -41,6 +52,7 @@ namespace PartyAffiliationClassifier
                     List<string> queensSpeech = new List<string>();
                     queensSpeech = streamReader.ReadToEnd().Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries).ToList();
 
+                    // remove stopwords
                     foreach (var word in queensSpeech.ToList())
                     {
                         for (int j = 0; j < stopWords.Length; j++)
@@ -56,37 +68,30 @@ namespace PartyAffiliationClassifier
                     Console.WriteLine("All of the words: {0}", queensSpeech.Count());
                     Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
 
-                    //string speechString = string.Join(" ", queensSpeech.ToArray());
-                    //Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
-
-                    //foreach (var word in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase))
-                    //{
-                    //    string dupSearch = word;
-                    //    int count = new Regex(dupSearch, RegexOptions.IgnoreCase).Matches(speechString).Count;
-
-                    //    wordFrequency.Add(word.ToLower(), count);
-
-                    //}
-
                     int count = 0;
 
                     Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
+                    // add name of the file as the first entry in the dictionary (file name = category name)
                     wordFrequency.Add(Path.GetFileNameWithoutExtension(f.File), 0);
 
                     foreach (var uniqueWord in queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).ToArray())
                     {
+                        // for each unique word in the file count how many times it shows up 
                         for (int i = 0; i < queensSpeech.Count; i++)
                         {
+                            // if they match just add one to the count variable
                             if (uniqueWord.ToLower() == queensSpeech[i].ToLower())
                             {
                                 count++;
                             }
                         }
+                        // add the unique word and the frequency to the dictionary
                         wordFrequency.Add(uniqueWord.ToLower(), count);
                         count = 0;
                     }
 
-                    foreach (KeyValuePair<string, int> wordCount in wordFrequency) //.OrderBy(i => i.Value))
+                    // display each pair to the console
+                    foreach (KeyValuePair<string, int> wordCount in wordFrequency)
                     {
                         Console.WriteLine("Word = {0}, Count = {1}", wordCount.Key, wordCount.Value);
                     }
@@ -102,13 +107,21 @@ namespace PartyAffiliationClassifier
                 return null;
             }
         }
+
+
+        /// <summary>
+        /// Used for the classification part of the assignment.
+        /// Takes in the name of the file that needs to be classified,
+        /// removes stop words and returns a list of words.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public List<string> FileReaderClassification(string fileName)
         {
-            char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n', '\''};
+            char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n', '\'' };
 
             string[] stopWords = File.ReadLines(@".\stopwords.txt").ToArray();
             List<string> listOfFileNames = new List<string>();
-            Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
 
             try
             {
@@ -143,6 +156,11 @@ namespace PartyAffiliationClassifier
             }
         }
 
+
+        /// <summary>
+        /// Write all the word objects into a binary file after the training has been finished.
+        /// </summary>
+        /// <param name="trainedWords"></param>
         public void WriteTraining(List<List<WordMetrics>> trainedWords)
         {
             try
@@ -160,6 +178,11 @@ namespace PartyAffiliationClassifier
             }
         }
 
+
+        /// <summary>
+        /// Read the word objects from the binary file.
+        /// </summary>
+        /// <returns></returns>
         public List<List<WordMetrics>> ReadTraining()
         {
             string fileToRead = @".\training.bin";
