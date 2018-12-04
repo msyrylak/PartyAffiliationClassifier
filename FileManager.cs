@@ -41,7 +41,7 @@ namespace PartyAffiliationClassifier
 
                 Console.WriteLine("{0} files found.", files.Count().ToString());
 
-                // foreach txt file i nthe folder
+                // foreach txt file in the folder
                 foreach (var f in files)
                 {
                     Console.WriteLine("{0}", f.File);
@@ -71,6 +71,7 @@ namespace PartyAffiliationClassifier
                     int count = 0;
 
                     Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
+
                     // add name of the file as the first entry in the dictionary (file name = category name)
                     wordFrequency.Add(Path.GetFileNameWithoutExtension(f.File), 0);
 

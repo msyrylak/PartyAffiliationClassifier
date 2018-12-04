@@ -14,7 +14,7 @@ namespace PartyAffiliationClassifier
         /// does a regex match with the first entries in the dictionaries with 0 assigned as key
         /// values and then adds those first entries to a list to remove from the vocabulary later on as it is not needed there. 
         /// After assigning those dictionaries to category lists, passes them into NaiveBayes method
-        /// that will then return a list of WordMetrics objects and adds it to a list of list of WordMetrics.
+        /// that will then return a list of WordMetrics objects and adds it to a list of lists of WordMetrics.
         /// Writes the objects into a binary file upon finishing the training phase.
         /// </summary>
         /// <param name="trainingFiles"></param>
@@ -32,7 +32,7 @@ namespace PartyAffiliationClassifier
 
             int noOfTrainingFiles = trainingFiles.Count();
 
-            // lists for each category 
+            // lists for each category and the vocabulary
             List<Dictionary<string, int>> l_conservative = new List<Dictionary<string, int>>();
             List<Dictionary<string, int>> l_coalition = new List<Dictionary<string, int>>();
             List<Dictionary<string, int>> l_labour = new List<Dictionary<string, int>>();
@@ -137,14 +137,11 @@ namespace PartyAffiliationClassifier
         {
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
+            int allCatWords = 0;
+
             List<WordMetrics> l_wordMetrics = new List<WordMetrics>();
             double categoryProbability = 1 / (double)numberOfTrainingFiles;
 
-            // create the first object for the category and its probability 
-            WordMetrics categoryWord = new WordMetrics(categoryName, 1, categoryProbability);
-            l_wordMetrics.Add(categoryWord);
-
-            int allCatWords = 0;
 
             // calculate number of all the words in the category
             foreach (KeyValuePair<string, int> word in categoryFile)
@@ -152,11 +149,17 @@ namespace PartyAffiliationClassifier
                 allCatWords += word.Value;
             }
 
+            // create the first object for the category and its probability 
+            WordMetrics categoryWord = new WordMetrics(categoryName, 1, categoryProbability, uniqueWords, allCatWords);
+            l_wordMetrics.Add(categoryWord);
+
+
+
             // calculate probability for each word and then create a new object with this information
             foreach (KeyValuePair<string, int> word in categoryFile)
             {
                 double probabilityResult = ((word.Value + 1) / (double)(uniqueWords + allCatWords));
-                WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult);
+                WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult, uniqueWords, allCatWords);
                 l_wordMetrics.Add(wordMetrics);
             }
 
@@ -170,13 +173,11 @@ namespace PartyAffiliationClassifier
         {
             // number of unique words in the training set
             int uniqueWords = uniqueVocabulary.Count();
+            int allCatWords = 0;
+
             Dictionary<string, int> dictCopy = new Dictionary<string, int>();
             List<WordMetrics> l_wordMetrics = new List<WordMetrics>();
             double categoryProbability = categoryFiles.Count() / (double)numberOfTrainingFiles;
-
-            // creates the first object for the category and its probability 
-            WordMetrics categoryWord = new WordMetrics(categoryName, categoryFiles.Count(), categoryProbability);
-            l_wordMetrics.Add(categoryWord);
 
             // merge two or more dictionaries for the category together
             // if the keys are the same just add their values
@@ -196,7 +197,6 @@ namespace PartyAffiliationClassifier
                 }
             }
 
-            int allCatWords = 0;
 
             // calculate number of all the words in the category
             foreach (KeyValuePair<string, int> frequency in dictCopy)
@@ -204,11 +204,16 @@ namespace PartyAffiliationClassifier
                 allCatWords += frequency.Value;
             }
 
+
+            // creates the first object for the category and its probability 
+            WordMetrics categoryWord = new WordMetrics(categoryName, categoryFiles.Count(), categoryProbability, uniqueWords, allCatWords);
+            l_wordMetrics.Add(categoryWord);
+
             // calculate probability for each word and then create a new object with this information
             foreach (KeyValuePair<string, int> word in dictCopy)
             {
                 double probabilityResult = (word.Value + 1) / (double)(uniqueWords + allCatWords);
-                WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult);
+                WordMetrics wordMetrics = new WordMetrics(word.Key, word.Value, probabilityResult, uniqueWords, allCatWords);
                 l_wordMetrics.Add(wordMetrics);
             }
 
@@ -239,14 +244,24 @@ namespace PartyAffiliationClassifier
             {
                 if (list[0].Value == "Conservative")
                 {
+                    double uniqueVocabulary = list[0].UniqueVocab;
+                    double allCatWords = list[0].AllCatWords;
+                    int hits;
+
                     foreach (var newWord in fileToClassify)
                     {
+                        hits = 0;
                         for (int i = 1; i < list.Count(); i++)
                         {
                             if (newWord.ToLower() == list[i].Value)
                             {
                                 probabilityConservative += Math.Log(list[i].Probability);
+                                hits++;
                             }
+                        }
+                        if (hits == 0)
+                        {
+                            probabilityConservative += Math.Log((0 + 1) / (uniqueVocabulary + allCatWords));
                         }
                     }
                     probabilityConservative += Math.Log(list[0].Probability);
@@ -254,14 +269,24 @@ namespace PartyAffiliationClassifier
 
                 if (list[0].Value == "Labour")
                 {
+                    double uniqueVocabulary = list[0].UniqueVocab;
+                    double allCatWords = list[0].AllCatWords;
+                    int hits;
+
                     foreach (var newWord in fileToClassify)
                     {
+                        hits = 0;
                         for (int i = 1; i < list.Count(); i++)
                         {
                             if (newWord.ToLower() == list[i].Value)
                             {
                                 probabilityLabour += Math.Log(list[i].Probability);
+                                hits++;
                             }
+                        }
+                        if (hits == 0)
+                        {
+                            probabilityLabour += Math.Log((0 + 1) / (uniqueVocabulary + allCatWords));
                         }
                     }
                     probabilityLabour += Math.Log(list[0].Probability);
@@ -269,15 +294,24 @@ namespace PartyAffiliationClassifier
 
                 if (list[0].Value == "Coalition")
                 {
+                    double uniqueVocabulary = list[0].UniqueVocab;
+                    double allCatWords = list[0].AllCatWords;
+                    int hits;
+
                     foreach (var newWord in fileToClassify)
                     {
-
+                        hits = 0;
                         for (int i = 1; i < list.Count(); i++)
                         {
                             if (newWord.ToLower() == list[i].Value)
                             {
                                 probabilityCoalition += Math.Log(list[i].Probability);
+                                hits++;
                             }
+                        }
+                        if (hits == 0)
+                        {
+                            probabilityCoalition += Math.Log((0 + 1) / (uniqueVocabulary + allCatWords));
                         }
                     }
                     probabilityCoalition += Math.Log(list[0].Probability);
@@ -288,17 +322,17 @@ namespace PartyAffiliationClassifier
             Console.WriteLine("Labour: " + probabilityLabour);
 
             // comparison
-            if (probabilityConservative < probabilityLabour && probabilityConservative < probabilityCoalition)
+            if (probabilityConservative > probabilityLabour && probabilityConservative > probabilityCoalition)
             {
                 Console.WriteLine("File belongs to Conservative category");
                 Console.WriteLine();
             }
-            if (probabilityLabour < probabilityConservative && probabilityLabour < probabilityCoalition)
+            if (probabilityLabour > probabilityConservative && probabilityLabour > probabilityCoalition)
             {
                 Console.WriteLine("File belongs to Labour category");
                 Console.WriteLine();
             }
-            if (probabilityCoalition < probabilityLabour && probabilityCoalition < probabilityConservative)
+            if (probabilityCoalition > probabilityLabour && probabilityCoalition > probabilityConservative)
             {
                 Console.WriteLine("File belongs to Coalition category");
                 Console.WriteLine();
