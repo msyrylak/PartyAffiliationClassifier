@@ -324,17 +324,17 @@ namespace PartyAffiliationClassifier
             // comparison
             if (probabilityConservative > probabilityLabour && probabilityConservative > probabilityCoalition)
             {
-                Console.WriteLine("File belongs to Conservative category");
+                Console.WriteLine("File belongs to CONSERVATIVE category");
                 Console.WriteLine();
             }
             if (probabilityLabour > probabilityConservative && probabilityLabour > probabilityCoalition)
             {
-                Console.WriteLine("File belongs to Labour category");
+                Console.WriteLine("File belongs to LABOUR category");
                 Console.WriteLine();
             }
             if (probabilityCoalition > probabilityLabour && probabilityCoalition > probabilityConservative)
             {
-                Console.WriteLine("File belongs to Coalition category");
+                Console.WriteLine("File belongs to COALITION category");
                 Console.WriteLine();
             }
         }

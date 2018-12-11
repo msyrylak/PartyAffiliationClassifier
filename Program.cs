@@ -26,7 +26,7 @@ namespace PartyAffiliationClassifier
                     "b) classify a document" + '\n' + "c) close the program");
                 answer = Console.ReadLine();
 
-                switch (answer)
+                switch (answer.ToLower())
                 {
                     case "a":
                         Console.WriteLine("You chose training!");
@@ -37,6 +37,7 @@ namespace PartyAffiliationClassifier
 
                         trainedFiles = classifier.Train(fileManager.FileReaderTraining(folderName));
 
+                        Console.WriteLine(" ");
                         Console.WriteLine("Training finished! Do you want to classify a document now? (Y/N)");
                         string classificationAnswer = Console.ReadLine();
                         Console.WriteLine();
@@ -46,9 +47,13 @@ namespace PartyAffiliationClassifier
                             fileToClassify = Console.ReadLine();
                             classifier.Classify(trainedFiles, fileToClassify);
                         }
-                        else
+                        else if (classificationAnswer.ToLower() == "n")
                         {
                             quit = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry, the answer not recognised.");
                         }
                         break;
 

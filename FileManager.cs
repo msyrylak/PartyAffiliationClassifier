@@ -39,15 +39,10 @@ namespace PartyAffiliationClassifier
                                 File = file,
                             };
 
-                Console.WriteLine("{0} files found.", files.Count().ToString());
-
                 // foreach txt file in the folder
                 foreach (var f in files)
                 {
-                    Console.WriteLine("{0}", f.File);
-
                     StreamReader streamReader = new StreamReader(f.File);
-
 
                     List<string> queensSpeech = new List<string>();
                     queensSpeech = streamReader.ReadToEnd().Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -64,9 +59,6 @@ namespace PartyAffiliationClassifier
                             }
                         }
                     }
-
-                    Console.WriteLine("All of the words: {0}", queensSpeech.Count());
-                    Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
 
                     int count = 0;
 
@@ -89,12 +81,6 @@ namespace PartyAffiliationClassifier
                         // add the unique word and the frequency to the dictionary
                         wordFrequency.Add(uniqueWord.ToLower(), count);
                         count = 0;
-                    }
-
-                    // display each pair to the console
-                    foreach (KeyValuePair<string, int> wordCount in wordFrequency)
-                    {
-                        Console.WriteLine("Word = {0}, Count = {1}", wordCount.Key, wordCount.Value);
                     }
 
                     listOfProcessedFiles.Add(wordFrequency);
@@ -143,10 +129,6 @@ namespace PartyAffiliationClassifier
                         }
                     }
                 }
-
-                Console.WriteLine("All of the words: {0}", queensSpeech.Count());
-                Console.WriteLine("Unique words: {0}", queensSpeech.Distinct(StringComparer.CurrentCultureIgnoreCase).Count());
-                int count = 0;
 
                 return queensSpeech;
             }
