@@ -21,7 +21,7 @@ namespace PartyAffiliationClassifier
         /// </summary>
         /// <param name="folderName"></param>
         /// <returns></returns>
-        public List<Dictionary<string, int>> FileReaderTraining(string folderName)
+        public List<Dictionary<string, int>> TrainingFileReader(string folderName)
         {
             char[] delimiterChars = { ' ', ',', '.', ':', ';', '\'', '\t', '\r', '\n' };
 
@@ -103,7 +103,7 @@ namespace PartyAffiliationClassifier
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public List<string> FileReaderClassification(string fileName)
+        public List<string> ClassificationFileReader(string fileName)
         {
             char[] delimiterChars = { ' ', ',', '.', ':', ';', '\t', '\r', '\n', '\'' };
 

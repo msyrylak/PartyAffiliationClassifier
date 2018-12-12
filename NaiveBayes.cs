@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace PartyAffiliationClassifier
 {
-    class Classifier
+    class NaiveBayes
     {
         /// <summary>
         /// Creates a list of files(which are now dictionaries) for each category,
@@ -72,9 +72,9 @@ namespace PartyAffiliationClassifier
             }
 
             List<List<WordMetrics>> wordMetrics = new List<List<WordMetrics>>();
-            wordMetrics.Add(NaiveBayes(categoryName3, vocabulary, l_labour, entriesToRemove, noOfTrainingFiles));
-            wordMetrics.Add(NaiveBayes(categoryName1, vocabulary, l_conservative, entriesToRemove, noOfTrainingFiles));
-            wordMetrics.Add(NaiveBayes(categoryName2, vocabulary, l_coalition, entriesToRemove, noOfTrainingFiles));
+            wordMetrics.Add(WordProbabilitiesCalculator(categoryName1, vocabulary, l_conservative, entriesToRemove, noOfTrainingFiles));
+            wordMetrics.Add(WordProbabilitiesCalculator(categoryName2, vocabulary, l_coalition, entriesToRemove, noOfTrainingFiles));
+            wordMetrics.Add(WordProbabilitiesCalculator(categoryName3, vocabulary, l_labour, entriesToRemove, noOfTrainingFiles));
 
             FileManager fm = new FileManager();
             fm.WriteTraining(wordMetrics);
@@ -89,13 +89,13 @@ namespace PartyAffiliationClassifier
         /// </summary>
         /// <param name="categoryName"></param>
         /// <param name="vocabulary"></param>
-        /// <param name="category"></param>
+        /// <param name="categoryList"></param>
         /// <param name="listToRemove"></param>
         /// <param name="numberOfTrainingFiles"></param>
         /// <returns></returns>
-        private List<WordMetrics> NaiveBayes(string categoryName,
+        private List<WordMetrics> WordProbabilitiesCalculator(string categoryName,
             List<string> vocabulary,
-            List<Dictionary<string, int>> category,
+            List<Dictionary<string, int>> categoryList,
             List<string> listToRemove,
             int numberOfTrainingFiles)
         {
@@ -107,7 +107,7 @@ namespace PartyAffiliationClassifier
                 vocabulary.Remove(listToRemove[i]);
             }
 
-            foreach (Dictionary<string, int> item in category)
+            foreach (Dictionary<string, int> item in categoryList)
             {
                 for (int i = 0; i < listToRemove.Count; i++)
                 {
@@ -116,15 +116,15 @@ namespace PartyAffiliationClassifier
             }
 
             // based on the number of files in the category, pass into one of the overloads of the CalculateProbability method
-            foreach (Dictionary<string, int> categoryFile in category)
+            foreach (Dictionary<string, int> categoryFile in categoryList)
             {
-                if (category.Count() < 2)
+                if (categoryList.Count() < 2)
                 {
                     wordsProbabilities = CalculateProbability(categoryName, uniqueVocabulary, categoryFile, numberOfTrainingFiles);
                 }
                 else
                 {
-                    wordsProbabilities = CalculateProbability(categoryName, uniqueVocabulary, category, numberOfTrainingFiles);
+                    wordsProbabilities = CalculateProbability(categoryName, uniqueVocabulary, categoryList, numberOfTrainingFiles);
                 }
             }
             return wordsProbabilities;
@@ -197,13 +197,11 @@ namespace PartyAffiliationClassifier
                 }
             }
 
-
             // calculate number of all the words in the category
             foreach (KeyValuePair<string, int> frequency in dictCopy)
             {
                 allCatWords += frequency.Value;
             }
-
 
             // creates the first object for the category and its probability 
             WordMetrics categoryWord = new WordMetrics(categoryName, categoryFiles.Count(), categoryProbability, uniqueWords, allCatWords);
@@ -233,7 +231,7 @@ namespace PartyAffiliationClassifier
             FileManager fileManager = new FileManager();
 
             // prepare the text file for classification
-            List<string> fileToClassify = fileManager.FileReaderClassification(newFile);
+            List<string> fileToClassify = fileManager.ClassificationFileReader(newFile);
 
             double probabilityConservative = 0;
             double probabilityLabour = 0;
@@ -246,20 +244,20 @@ namespace PartyAffiliationClassifier
                 {
                     double uniqueVocabulary = list[0].UniqueVocab;
                     double allCatWords = list[0].AllCatWords;
-                    int hits;
+                    int match;
 
                     foreach (var newWord in fileToClassify)
                     {
-                        hits = 0;
+                        match = 0;
                         for (int i = 1; i < list.Count(); i++)
                         {
                             if (newWord.ToLower() == list[i].Value)
                             {
                                 probabilityConservative += Math.Log(list[i].Probability);
-                                hits++;
+                                match++;
                             }
                         }
-                        if (hits == 0)
+                        if (match == 0)
                         {
                             probabilityConservative += Math.Log((0 + 1) / (uniqueVocabulary + allCatWords));
                         }

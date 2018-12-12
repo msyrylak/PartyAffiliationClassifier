@@ -15,7 +15,7 @@ namespace PartyAffiliationClassifier
             bool quit = false;
             string fileToClassify;
             string answer;
-            Classifier classifier = new Classifier();
+            NaiveBayes naiveBayes = new NaiveBayes();
             List<List<WordMetrics>> trainedFiles = new List<List<WordMetrics>>();
             FileManager fileManager = new FileManager();
 
@@ -31,25 +31,28 @@ namespace PartyAffiliationClassifier
                     case "a":
                         Console.WriteLine("You chose training!");
                         Console.WriteLine();
-                        Console.WriteLine("Specify a folder from which you wish to train the machine.");
+                        Console.WriteLine("Specify a folder name within the program's directory from which you wish to train the machine.");
 
                         string folderName = Console.ReadLine();
 
-                        trainedFiles = classifier.Train(fileManager.FileReaderTraining(folderName));
+                        trainedFiles = naiveBayes.Train(fileManager.TrainingFileReader(folderName));
 
                         Console.WriteLine(" ");
                         Console.WriteLine("Training finished! Do you want to classify a document now? (Y/N)");
+
                         string classificationAnswer = Console.ReadLine();
+
                         Console.WriteLine();
                         if (classificationAnswer.ToLower() == "y")
                         {
                             Console.WriteLine("Type in a file name.");
                             fileToClassify = Console.ReadLine();
-                            classifier.Classify(trainedFiles, fileToClassify);
+
+                            naiveBayes.Classify(trainedFiles, fileToClassify);
                         }
                         else if (classificationAnswer.ToLower() == "n")
                         {
-                            quit = true;
+                            break;
                         }
                         else
                         {
@@ -60,9 +63,10 @@ namespace PartyAffiliationClassifier
                     case "b":
                         Console.WriteLine("You chose file classification!");
                         Console.WriteLine("Type in a file name");
+
                         fileToClassify = Console.ReadLine();
                         trainedFiles = fileManager.ReadTraining();
-                        classifier.Classify(trainedFiles, fileToClassify);
+                        naiveBayes.Classify(trainedFiles, fileToClassify);
                         break;
 
                     case "c":
