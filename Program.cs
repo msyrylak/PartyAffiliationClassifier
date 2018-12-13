@@ -15,8 +15,10 @@ namespace PartyAffiliationClassifier
             bool quit = false;
             string fileToClassify;
             string answer;
+            List<List<WordMetrics>> bayesianNetwork = new List<List<WordMetrics>>();
+            List<Dictionary<string, int>> trainedFiles = new List<Dictionary<string, int>>();
+
             NaiveBayes naiveBayes = new NaiveBayes();
-            List<List<WordMetrics>> trainedFiles = new List<List<WordMetrics>>();
             FileManager fileManager = new FileManager();
 
             do
@@ -35,7 +37,8 @@ namespace PartyAffiliationClassifier
 
                         string folderName = Console.ReadLine();
 
-                        trainedFiles = naiveBayes.Train(fileManager.TrainingFileReader(folderName));
+                        trainedFiles = fileManager.TrainingFileReader(folderName);
+                        bayesianNetwork = naiveBayes.Train(trainedFiles);
 
                         Console.WriteLine(" ");
                         Console.WriteLine("Training finished! Do you want to classify a document now? (Y/N)");
@@ -48,7 +51,7 @@ namespace PartyAffiliationClassifier
                             Console.WriteLine("Type in a file name.");
                             fileToClassify = Console.ReadLine();
 
-                            naiveBayes.Classify(trainedFiles, fileToClassify);
+                            naiveBayes.Classify(bayesianNetwork, fileToClassify);
                         }
                         else if (classificationAnswer.ToLower() == "n")
                         {
@@ -65,8 +68,8 @@ namespace PartyAffiliationClassifier
                         Console.WriteLine("Type in a file name");
 
                         fileToClassify = Console.ReadLine();
-                        trainedFiles = fileManager.ReadTraining();
-                        naiveBayes.Classify(trainedFiles, fileToClassify);
+                        bayesianNetwork = fileManager.ReadTraining();
+                        naiveBayes.Classify(bayesianNetwork, fileToClassify);
                         break;
 
                     case "c":
