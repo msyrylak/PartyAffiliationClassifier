@@ -37,4 +37,4 @@ We have to do it for each category and the one with the highest result will be t
 
 It's better to change the multiplication into summation of the logarithms of the conditional probabilites as the numbers will be too small and may generate floating-point errors and come out as 0.
 
-**Also remember that if the word is present in the document but not in the category to still assign it to the final sum by using the probability - 0 + 1/(catN + allWords)**
+**Also remember that if the word is present in the document but not in the category, you still assign it to the final sum by using the probability - 0 + 1/(catN + allWords)**
